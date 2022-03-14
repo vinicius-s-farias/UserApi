@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  apiusers:
+    image: "apiusers:v1"
+    ports:
+      - 8081:8081
+    environment:
+      DB_URL: jdbc:postgresql://database:5432/postgres
+    restart: always
+  apistocks:
+    image: "stockapi:v1"
+    ports:
+      - 8082:8082
+    environment:
+      DB_URL: jdbc:postgresql://database:5432/funciona
+    restart: always
+  database:
+    image: 'postgres:latest'
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: solinftec
+      POSTGRES_DB: funciona
+    volumes:
+      - /var/usr/lib/postgresql/12/main
+    restart: always
