@@ -50,6 +50,6 @@ public class UserStockController {
             UserStock ust = ustock.transObj(us);
             return userStockRepository.save(ust);
         }
-
-
+//alou
+//
 }
