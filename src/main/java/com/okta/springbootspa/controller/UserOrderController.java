@@ -1,4 +1,4 @@
-package com.okta.springbootspa.restController;
+package com.okta.springbootspa.controller;
 
 import com.okta.springbootspa.dto.UserOrderDto;
 import com.okta.springbootspa.model.User;
@@ -9,7 +9,10 @@ import com.okta.springbootspa.repository.UserRepository;
 import com.okta.springbootspa.repository.UserStockRepository;
 import com.okta.springbootspa.service.MatchService;
 import com.okta.springbootspa.service.UserStockService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +21,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class UserOrderController {
+
     @Autowired
     private UserOrderRepository userOrderRepository;
     @Autowired
@@ -31,33 +35,39 @@ public class UserOrderController {
 
     @GetMapping("/orders")
     public List<UserOrder> listar() {
-        return userOrderRepository.FindOrder();
+        return userOrderRepository.findOrder();
     }
 
     @PostMapping("/order")
     public ResponseEntity<UserOrder> criaOrdem(@RequestBody UserOrderDto dto ,@RequestHeader("Authorization") String token) {
-        User user = userRepository.findById(dto.getId_user()).orElseThrow();
-        List<UserStock> teste = userStockRepository.FindStock(dto.getId_user(), dto.getId_stock());
-        Double dollar = user.getDollar_balance();
+        User user = userRepository.findById(dto.getIdUser()).orElseThrow();
+        List<UserStock> teste = userStockRepository.findStock(dto.getIdUser(), dto.getIdStock());
+        Double dollar = user.getDollarBalance();
         Double mult = dto.getPrice() * dto.getVolume();
         if(dollar >= mult && dto.getType() == 0) {
             UserOrder userOrders = userOrderRepository.save(dto.transObj(user));
-            userStockService.teste1(userOrders.getId_stock(), token);
+            userStockService.teste1(userOrders.getIdStock(), token);
             matchService.match();
             return new ResponseEntity<>(userOrders, HttpStatus.CREATED);
         } else if(dto.getType() == 1 &&  !teste.isEmpty()  ){
             if(dto.getVolume() <= teste.get(0).getVolume() ){
                 UserOrder userOrders = userOrderRepository.save(dto.transObj(user));
-                userStockService.teste1(userOrders.getId_stock(), token);
+                userStockService.teste1(userOrders.getIdStock(), token);
                 matchService.match();
                 return new ResponseEntity<>(userOrders, HttpStatus.CREATED);
             }else {
-                System.out.println("Ordem não criada");
+
+                return ResponseEntity.badRequest().build();
             }
         }else {
-            System.out.println("Ordem não criada");
+            return ResponseEntity.badRequest().build();
         }
-        return null;
+
+    }
+
+    @GetMapping("/page")
+    Page<UserOrder> getStock(Pageable page){
+        return userOrderRepository.findOrder2(page);
     }
 
 }

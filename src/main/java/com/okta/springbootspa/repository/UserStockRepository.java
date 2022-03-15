@@ -11,21 +11,21 @@ import java.util.List;
 public interface UserStockRepository extends JpaRepository<UserStock, Long> {
 
     @Query(value = "select MAX(price) from users_orders where id_stock = ?1 and status = 1 and type = 1", nativeQuery = true)
-    Double getAskMax(Long id_stock);
+    Double getAskMax(Long idStock);
 
     @Query(value = "select MIN(price) from users_orders where id_stock = ?1 and status = 1 and type = 1", nativeQuery = true)
-    Double getAskMin(Long id_stock);
+    Double getAskMin(Long idStock);
 
     @Query(value = "select MAX(price) from users_orders where id_stock = ?1 and status = 1 and type = 0 ", nativeQuery = true)
-    Double getBidMax(Long id_stock);
+    Double getBidMax(Long idStock);
 
     @Query(value = "select MIN(price) from users_orders where id_stock = ?1 and status = 1 and type = 0", nativeQuery = true)
-    Double getBidMin(Long id_stock);
+    Double getBidMin(Long idStock);
 
     @Query(value =  "  select * from users_stocks_balances usb where id_user = ?1 " , nativeQuery = true)
-    List<UserStock> FindUser(Long user);
+    List<UserStock> findUser(Long user);
 
     @Query(value =  "  select * from users_stocks_balances usb where id_user = ?1 and id_stock = ?2 " , nativeQuery = true)
-    List<UserStock> FindStock(Long user, Long id_stock);
+    List<UserStock> findStock(Long user, Long idStock);
 
 }

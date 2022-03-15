@@ -14,7 +14,7 @@ import java.util.List;
 public interface VendaRepository extends JpaRepository<UserOrder, Long> {
 
         @Query(value = "SELECT * FROM users_orders WHERE type = 1 and id_stock = ?1 and status = 1", nativeQuery = true)
-        List<UserOrder> findMatches(Long id_stock);//procurar ordens de venda abertas
+        List<UserOrder> findMatches(Long idStock);//procurar ordens de venda abertas
 
         @Query(value = "select * from " +
                 " users_orders a, users_orders b where a.remaining_value < b.remaining_value and  a.type = 1 and a.id_stock = b.id_stock and a.id_order <> b.id_order  and a.status = 1 and b.status = 1  and a.type <> b.type and a.price <= b.price order by a.created_on asc", nativeQuery = true)
@@ -45,15 +45,15 @@ public interface VendaRepository extends JpaRepository<UserOrder, Long> {
                 "fROM users_orders a, users_orders uo " +
                 "where  a.id_stock = uo.id_stock and a.type = 1  and uo.id_order <> a.id_order and a.id_order = ?1  and a.type <> uo.type " +
                 ") where id = ?2", nativeQuery = true)
-        int updateDollarBalanceNE(UserOrder id_order, User user);
+        int updateDollarBalanceNE(UserOrder idOrder, User user);
 
         @Modifying
         @Query(value = "update users_orders  set remaining_value = (SELECT  a.remaining_value - b.remaining_value  AS ID FROM users_orders b, users_orders a  WHERE a.type = 1 and b.status = 1 and a.type <> b.type  and a.id_stock = b.id_stock and a.id_order = ?1 fetch first 1 rows only ) where type = 1 AND id_order = ?1", nativeQuery = true)
-        int updateRemainingPO( UserOrder id_order);//Ele atualiza remaining value quando há match
+        int updateRemainingPO( UserOrder idOrder);//Ele atualiza remaining value quando há match
 
         @Modifying
         @Query(value = "update users_orders  set remaining_value = 0 where id_order=?1 and type = 1 ", nativeQuery = true)
-        int updateRemainingNE(UserOrder id_order);//Ele atualiza remaining value quando há match
+        int updateRemainingNE(UserOrder idOrder);//Ele atualiza remaining value quando há match
 
         @Modifying
         @Query(value = "update users_stocks_balances set volume = ( " +
@@ -63,7 +63,7 @@ public interface VendaRepository extends JpaRepository<UserOrder, Long> {
                 " inner join users_stocks_balances usb on u.id = usb.id_user " +
                 "  WHERE a.id_user = ?1 and a.id_stock = ?2 and usb.id_stock = ?2" +
                 " ) where id_user = ?1 and id_stock = ?2", nativeQuery = true)
-        int updateBallanceNE(User id_user, Long id_stock);
+        int updateBallanceNE(User idUser, Long idStock);
 
         @Modifying
         @Query(value = "update users_stocks_balances set volume = volume - ( select  uo.volume - uo.remaining_value " +
@@ -71,6 +71,6 @@ public interface VendaRepository extends JpaRepository<UserOrder, Long> {
                 "  Inner join users u on id_user = u.id " +
                 "  inner join users_stocks_balances usb on u.id = usb.id_user " +
                 "  WHERE  a.id_stock = usb.id_stock and a.id_user = ?1 and a.id_stock = ?2 and uo.type = 0 fetch first 1 rows only ) where id_user = ?1 and id_stock = ?2 ", nativeQuery = true)
-        int atualizarBalancePO(User user, Long id_stock);
+        int atualizarBalancePO(User user, Long idStock);
 
 }

@@ -7,11 +7,11 @@ public class UserDto {
 
     private String username;
     private String password;
-    private double dollar_balance;
+    private double dollarBalance;
 
-    public void User(String username , String password, Double dollar_balance) {
+    public void user(String username , String password, Double dollarBalance) {
         this.username = username;
         this.password = password;
-        this.dollar_balance = dollar_balance;
+        this.dollarBalance = dollarBalance;
     }
 }

@@ -21,7 +21,7 @@ import java.util.Random;
 
 @SpringBootApplication
 public class SpringBootSpaApplication {
-
+	Random rand = new Random();
 	@Bean
 	public WebClient webClienStock(WebClient.Builder builder) {
 		return builder
@@ -47,9 +47,9 @@ public class SpringBootSpaApplication {
 					"Everything is awesome. Stuff is definitely happening.",
 					"Eyeballs are rolling around in my head and I'm shouting at my coworker about JHipster.",
 					"The LD50 of caffeine is 100 cups. Your developer has had 99 and is talking to the bike rack outside while jogging in place.");
-			Random rand = new Random();
-			String caffeineLevelString = givenList.get(rand.nextInt(givenList.size()));
-			return caffeineLevelString;
+
+
+			return givenList.get(rand.nextInt(givenList.size()));
 		}
 
 		@GetMapping("/howcaffeinatedami")

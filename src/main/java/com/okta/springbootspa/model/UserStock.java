@@ -1,6 +1,5 @@
 package com.okta.springbootspa.model;
 
-import com.okta.springbootspa.keys.Chave;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,24 +20,27 @@ public class UserStock implements Serializable {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private User id_user;
-    private Long id_stock;
-    private String stock_symbol;
-    private String stock_name;
+    private User idUser;
+    @Column(name = "id_stock")
+    private Long idStock;
+    @Column(name = "stock_symbol")
+    private String stockSymbol;
+    @Column(name = "stock_name")
+    private String stockName;
     private Long volume;
     @CreationTimestamp
     @Column(name = "created_on")
-    private Timestamp created_on;
+    private Timestamp createdOn;
     @UpdateTimestamp
     @Column(name = "updated_on")
-    private Timestamp updated_on;
+    private Timestamp updatedOn;
 
-    public UserStock(User id_user,Long id, Long id_stock, String stock_symbol, String stock_name, Long volume) {
-        this.id_user = id_user;
+    public UserStock(User idUser,Long id, Long idStock, String stockSymbol, String stockName, Long volume) {
+        this.idUser = idUser;
         this.id = id;
-        this.id_stock = id_stock;
-        this.stock_symbol = stock_symbol;
-        this.stock_name = stock_name;
+        this.idStock = idStock;
+        this.stockSymbol = stockSymbol;
+        this.stockName = stockName;
         this.volume = volume;
     }
     public UserStock() {
