@@ -1,6 +1,8 @@
 package com.okta.springbootspa.dto;
 
+import com.okta.springbootspa.model.User;
 import lombok.Data;
+
 
 @Data
 public class UserDto {
@@ -13,5 +15,13 @@ public class UserDto {
         this.username = username;
         this.password = password;
         this.dollarBalance = dollarBalance;
+    }
+
+    public User transObj(){
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setDollarBalance(dollarBalance);
+        return user;
     }
 }
