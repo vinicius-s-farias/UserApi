@@ -44,7 +44,6 @@ public class UserStock implements Serializable {
         this.volume = volume;
     }
     public UserStock() {
-
     }
 
     @Override

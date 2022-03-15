@@ -22,11 +22,12 @@ public class UserController {
     public List<User> listar() {
         return userRepository.findAll();
     }
+
     @GetMapping("/users/{username}")
     public Long list(@PathVariable ("username")String user)  {
         Optional<User> us = userRepository.findUser(user) ;
             if(us.isEmpty()){
-            return userRepository.save(new User(user, "qualquercoisa", 10000)).getId();
+            return userRepository.save(new User(user, "qualquercoisa", 1000000)).getId();
             }else {
                 return us.get().getId();
             }
@@ -39,14 +40,11 @@ public class UserController {
 
     @PostMapping("/users")
     public User adicionar(@RequestBody UserDto dto) {
-        User user = new User();
-        return userRepository.save(user);
+        return userRepository.save(dto.transObj());
     }
     @DeleteMapping("/users")
-    public void deletaUser(){
-    User user = new User();
-        userRepository.delete(user);
-
+    public void deletaUser(UserDto dto){
+        userRepository.delete(dto.transObj());
     }
 
 
