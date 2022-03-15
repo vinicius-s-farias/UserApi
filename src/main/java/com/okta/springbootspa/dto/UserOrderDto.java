@@ -8,30 +8,29 @@ import lombok.Setter;
 @Setter
 @Getter
 public class UserOrderDto {
-    private Long id_order;
-    private Long id_user;
-    private Long id_stock;
-    private String stock_symbol;
-    private String stock_name;
+    private Long idOrder;
+    private Long idUser;
+    private Long idStock;
+    private String stockSymbol;
+    private String stockName;
     private Long volume;
     private double price;
     private int type;
     private int status;
-    private Long remaining_value;
+    private Long remainingValue;
 
     public UserOrder transObj(User user){
-        return new UserOrder(
-                user,
-                id_user,
-                id_stock,
-                stock_symbol,
-                stock_name,
-                price,
-                type,
-                status,
-                volume,
-                remaining_value
-        );
+        UserOrder order = new UserOrder();
+        order.setIdUser(user);
+        order.setIdStock(idStock);
+        order.setStockSymbol(stockSymbol);
+        order.setStockName(stockName);
+        order.setPrice(price);
+        order.setType(type);
+        order.setStatus(1);
+        order.setRemainingValue(remainingValue);
+        order.setVolume(volume);
+        return order;
     }
 }
 

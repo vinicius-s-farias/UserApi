@@ -1,6 +1,8 @@
 package com.okta.springbootspa.repository;
 
 import com.okta.springbootspa.model.UserOrder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,8 +16,10 @@ import java.util.List;
         public interface UserOrderRepository extends JpaRepository<UserOrder, Long > {
 
         @Query(value =  " select * from users_orders uo   where status = 1 order by updated_on desc fetch first 4 rows only" , nativeQuery = true)
-        List<UserOrder> FindOrder();
+        List<UserOrder> findOrder();
 
+        @Query(value =  " select * from users_orders uo where status = 1 order by updated_on ", nativeQuery = true)
+        Page<UserOrder> findOrder2(Pageable page);
         }
 
 

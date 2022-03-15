@@ -1,9 +1,8 @@
-package com.okta.springbootspa.restController;
+package com.okta.springbootspa.controller;
+
 
 import com.okta.springbootspa.dto.UserDto;
 import com.okta.springbootspa.model.User;
-import com.okta.springbootspa.model.UserOrder;
-import com.okta.springbootspa.model.UserStock;
 import com.okta.springbootspa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,7 @@ public class UserController {
     }
     @GetMapping("/users/{username}")
     public Long list(@PathVariable ("username")String user)  {
-        Optional<User> us = userRepository.FindUser(user) ;
+        Optional<User> us = userRepository.findUser(user) ;
             if(us.isEmpty()){
             return userRepository.save(new User(user, "qualquercoisa", 10000)).getId();
             }else {
@@ -35,20 +34,19 @@ public class UserController {
 
     @GetMapping("/teste/{id}")
     public List <User> list(@PathVariable ("id")Long user){
-        return userRepository.FindUser(user);
+        return userRepository.findUser(user);
     }
 
     @PostMapping("/users")
-    public User adicionar(@RequestBody User user) {
+    public User adicionar(@RequestBody UserDto dto) {
+        User user = new User();
         return userRepository.save(user);
     }
     @DeleteMapping("/users")
-    public void deletaUser(@RequestBody User user){
+    public void deletaUser(){
+    User user = new User();
         userRepository.delete(user);
-    }
-    @PutMapping("/users")
-    public User atualizaUser(@RequestBody User user) {
-        return userRepository.save(user);
+
     }
 
 

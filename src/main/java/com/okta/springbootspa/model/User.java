@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
+
 @Service
 @Setter
 @Getter
@@ -21,50 +23,37 @@ public class User implements Serializable {
     private Long id;
     private String username;
     private String password;
-    private double dollar_balance;
+    @Column(name = "dollar_balance")
+    private double dollarBalance;
     private boolean enabled;
     @CreationTimestamp
     @Column(name = "created_on")
-    private Timestamp created_on;
+    private Timestamp createdOn;
     @UpdateTimestamp
     @Column(name = "updated_on")
-    private Timestamp updated_on;
+    private Timestamp updatedOn;
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result();
-    }
 
-    private int result() {
-        return 0;
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        User other = (User) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
-    }
-
-    public User(String username, String password, double dollar_balance) {
+    public User(String username, String password, double dollarBalance) {
         this.username = username;
         this.password = password;
-        this.dollar_balance = dollar_balance;
+        this.dollarBalance = dollarBalance;
     }
 
     public User() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getId().equals(user.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

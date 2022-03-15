@@ -6,7 +6,6 @@ import com.okta.springbootspa.dto.StockDto;
 import com.okta.springbootspa.dto.UserStockDto;
 import com.okta.springbootspa.model.UserStock;
 import com.okta.springbootspa.repository.UserStockRepository;
-import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -34,11 +33,7 @@ public class UserStockService {
                 .retrieve()
                 .bodyToMono(StockDto.class);
 
-        monoStock.subscribe(s -> {
-            System.out.println("acabou");
-        });
-        StockDto stock = monoStock.block();
-        return stock;
+        return monoStock.block();
     }
 
 
@@ -46,11 +41,10 @@ public class UserStockService {
     public StockDto teste1(Long id, @RequestHeader("Authorization") String token) {
         JSONObject json = new JSONObject();
         json.put("id", id);
-        json.put("ask_min", userStockRepository.getAskMin(id));
-        json.put("ask_max", userStockRepository.getAskMax(id));
-        json.put("bid_min", userStockRepository.getBidMin(id));
-        json.put("bid_max", userStockRepository.getBidMax(id));
-        System.out.println(json);
+        json.put("askMin", userStockRepository.getAskMin(id));
+        json.put("askMax", userStockRepository.getAskMax(id));
+        json.put("bidMin", userStockRepository.getBidMin(id));
+        json.put("bidMax", userStockRepository.getBidMax(id));
         Mono<StockDto> monoStock =
                 this.webClienStock
                         .post()
@@ -59,8 +53,7 @@ public class UserStockService {
                         .body(BodyInserters.fromValue(json))
                         .retrieve()
                         .bodyToMono(StockDto.class);
-        StockDto stock = monoStock.block();
-        return stock;
+        return  monoStock.block();
     }
 
     public UserStockDto getWallet(Long id) throws TreinamentoDefaultException {
