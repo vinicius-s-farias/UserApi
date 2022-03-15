@@ -1,6 +1,5 @@
 package com.okta.springbootspa.repository;
 
-import com.okta.springbootspa.dto.UserDto;
 import com.okta.springbootspa.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
