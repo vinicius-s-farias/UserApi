@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 public class UserStockController {
     @Autowired
@@ -48,6 +48,5 @@ public class UserStockController {
             UserStock ust = ustock.transObj(us);
             return userStockRepository.save(ust);
         }
-//alou
-//
+
 }
