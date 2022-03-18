@@ -18,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 public class UserOrderController {
 
@@ -62,7 +62,6 @@ public class UserOrderController {
         }else {
             return ResponseEntity.badRequest().build();
         }
-
     }
 
     @GetMapping("/page")

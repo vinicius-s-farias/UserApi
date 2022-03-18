@@ -17,6 +17,7 @@ import java.util.Objects;
 public class UserStock implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     @ManyToOne
     @JoinColumn(name = "id_user")
@@ -35,9 +36,8 @@ public class UserStock implements Serializable {
     @Column(name = "updated_on")
     private Timestamp updatedOn;
 
-    public UserStock(User idUser,Long id, Long idStock, String stockSymbol, String stockName, Long volume) {
+    public UserStock(User idUser, Long idStock, String stockSymbol, String stockName, Long volume) {
         this.idUser = idUser;
-        this.id = id;
         this.idStock = idStock;
         this.stockSymbol = stockSymbol;
         this.stockName = stockName;

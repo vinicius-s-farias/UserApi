@@ -24,7 +24,6 @@ public class UserStockDto {
     public UserStock transObj(User user){
         return new UserStock(
                 user,
-                idUser,
                 idStock,
                 stockSymbol,
                 stockName,

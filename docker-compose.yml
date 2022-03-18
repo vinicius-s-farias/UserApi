@@ -1,6 +1,10 @@
 version: '3'
 
 services:
+  front:
+    image: "front:v1"
+    ports:
+      - 8080:80
   apiusers:
     image: "apiusers:v1"
     ports:

@@ -48,7 +48,7 @@ public interface VendaRepository extends JpaRepository<UserOrder, Long> {
         int updateDollarBalanceNE(UserOrder idOrder, User user);
 
         @Modifying
-        @Query(value = "update users_orders  set remaining_value = (SELECT  a.remaining_value - b.remaining_value  AS ID FROM users_orders b, users_orders a  WHERE a.type = 1 and b.status = 1 and a.type <> b.type  and a.id_stock = b.id_stock and a.id_order = ?1 fetch first 1 rows only ) where type = 1 AND id_order = ?1", nativeQuery = true)
+        @Query(value = "update users_orders  set remaining_value = (SELECT  a.remaining_value - b.remaining_value  AS ID FROM users_orders a, users_orders b  WHERE a.type = 1 and b.status = 1 and a.type <> b.type  and a.id_stock = b.id_stock and a.id_order = ?1 fetch first 1 rows only ) where type = 1 AND id_order = ?1", nativeQuery = true)
         int updateRemainingPO( UserOrder idOrder);//Ele atualiza remaining value quando há match
 
         @Modifying
