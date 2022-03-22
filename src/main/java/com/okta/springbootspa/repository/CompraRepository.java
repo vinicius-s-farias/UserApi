@@ -15,19 +15,6 @@ import java.util.List;
 public interface CompraRepository extends JpaRepository<UserOrder, Long > {
 
     @Modifying
-    @Query(value = "update users set dollar_balance = dollar_balance - ( select uo.remaining_value  * uo.price FROM users_orders a, users_orders uo " +
-            " inner join users u on uo.id_user = u.id " +
-            " where a.status = 1 and a.type = 0 and a.status = uo.status  and a.id_user = ?1 and a.id_user <> uo.id_user and a.id_order = ?2 fetch first 1 rows only ) where id = ?1", nativeQuery = true)
-    int updateDollarBalancePO(User user, UserOrder idOrder);
-
-    @Modifying
-    @Query(value = " update users set dollar_balance = dollar_balance  - ( " +
-            " select a.remaining_value  * uo.price " +
-            " fROM users_orders a, users_orders uo " +
-            " where  a.id_stock = uo.id_stock and a.type = 0  and uo.id_order <> a.id_order and a.id_order = ?1 and a.id_user = ?2 and a.remaining_value  <> 0 fetch first 1 rows only ) where id = ?2", nativeQuery = true)
-    int updateDollarBalanceNE(UserOrder idOrder, User user);
-
-    @Modifying
     @Query(value = "update users_stocks_balances set volume = volume + (select a.remaining_value " +
             " AS ID FROM users_orders a, users_orders uo " +
             " inner join users u on uo.id_user = u.id  " +
