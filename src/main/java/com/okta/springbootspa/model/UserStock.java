@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Optional;
 
 @Setter
 @Getter
@@ -46,6 +47,13 @@ public class UserStock implements Serializable {
     public UserStock() {
     }
 
+
+    public UserStock(long l, long l1, String teste, String teste1, long l2) {
+    }
+
+    public UserStock(Optional<User> user, long l, String teste, String teste1, long l1) {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,5 +67,5 @@ public class UserStock implements Serializable {
         return Objects.hash(id);
     }
 
-//    aloiu
+
 }

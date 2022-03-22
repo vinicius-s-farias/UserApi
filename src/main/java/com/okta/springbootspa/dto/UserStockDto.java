@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class UserStockDto {
-    private Long id;
     private Long idUser;
     private Long idStock;
     private String stockSymbol;
